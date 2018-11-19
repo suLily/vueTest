@@ -91,6 +91,9 @@ textarea {
     line-height: 0;
     visibility: hidden;
 }
+* {
+    box-sizing: border-box;
+}
 
 html, body, .wrapper {
     height: 100%;
@@ -148,7 +151,6 @@ h1 p {
 
 .nav-box {
     padding: 26px 0;
-    height: 72px;
 }
 
 .nav {
@@ -166,11 +168,11 @@ h1 p {
     font-weight: 400;
 }
 
-.nav li.active a {
+.nav .active a{
     color: #e1b96e;
 }
 
-.nav li.active:after {
+.nav .active:after{
     content: '';
     display: block;
     position: absolute;

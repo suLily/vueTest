@@ -1,77 +1,59 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/navTest/home'
-import Content from '@/components/navTest/content'
-import About from '@/components/navTest/about'
-import Home1 from '@/components/navTest/home1'
-import Content1 from '@/components/navTest/content1'
-import One from '@/components/navTest/one'
-import Two from '@/components/navTest/two'
-import Three from '@/components/navTest/three'
-import Four from '@/components/navTest/four'
+import Home from '@/components/vueTest/index'
+import Content from '@/components/vueTest/content'
+import HomeView1 from '@/components/vueTest/link1'
+import HomeView2 from '@/components/vueTest/link2'
+import HomeView3 from '@/components/vueTest/link3'
 
 Vue.use(Router)
 
 export default new Router({
     routes: [
         {
-            path: '/',
+            path: '/index',
             name: 'Home',
             component: Home,
             children: [
                 {
-                    path: '/',
-                    name: 'Home1',
-                    component: Home1
-                },
-                /*{
-                    path: '',
-                    redirect:to=>{
-                        return 'home'
-                    }
-                },*/
-                {
-                    path: '/one',
-                    name: 'One',
-                    component: One
+                    path: '/index/link1',
+                    name: 'HomeView1',
+                    component: HomeView1
                 },
                 {
-                    path: '/two',
-                    name: 'Two',
-                    component: Two
+                    path: '/index/link2',
+                    name: 'HomeView2',
+                    component: HomeView2
+                },
+                {
+                    path: '/index/link3',
+                    name: 'HomeView3',
+                    component: HomeView3
                 }
-
-            ]
+            ]/*,
+            redirect:'/link1'*/
         },
         {
             path: '/content',
             name: 'Content',
-            component: Content,
-            children: [
-
-                {
-                    path: '/',
-                    name: 'Content1',
-                    component: Content1
-                },
-                {
-                    path: '/three',
-                    name: 'Three',
-                    component: Three
-                },
-                {
-                    path: '/four',
-                    name: 'Four',
-                    component: Four
-                }
-
-            ]
+            component: Content
+        },
+        /*,
+        {
+            path: '/link1',
+            name: 'HomeView1',
+            component: HomeView1
         },
         {
-            path: '/about',
-            name: 'About',
-            component: About
-        }
+            path: '/link2',
+            name: 'HomeView2',
+            component: HomeView2
+        },
+        {
+            path: '/link3',
+            name: 'HomeView3',
+            component: HomeView3
+        }*/
     ],
     mode: 'history'
 })
