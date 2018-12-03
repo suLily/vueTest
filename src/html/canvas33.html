@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>HTML5 Canvas 圆形进度条并显示数字百分比</title>
+
+            <style>
+                *{margin:0;padding:0;}
+                body{text-align:center;background-color:#fff;}
+            </style>
+
+        </head>
+<body>
+
+<canvas id="canvas" width="500" height="500" ></canvas><!--style="background-color: #000;"-->
+<script>
+    function inte(percent) {
+        var canvas = document.getElementById('canvas'),  //获取canvas元素
+            context = canvas.getContext('2d'),  //获取画图环境，指明为2d
+            centerX = canvas.width/2,   //Canvas中心点x轴坐标
+            centerY = canvas.height/2,  //Canvas中心点y轴坐标
+            rad = Math.PI*2/100, //将360度分成100份，那么每一份就是rad度
+            speed = 0.1; //加载的快慢就靠它了
+
+        //绘制5像素宽的运动外圈
+        function blueCircle(n){
+            /*context.save();
+            context.strokeStyle = "#f90"; //设置描边样式
+            context.lineWidth = 10; //设置线宽
+            context.beginPath(); //路径开始
+            context.lineCap = "round"
+            context.arc(centerX, centerY, 100 , -Math.PI/2, -Math.PI/2 +n*rad, false); //用于绘制圆弧context.arc(x坐标，y坐标，半径，起始角度，终止角度，顺时针/逆时针)
+            context.stroke(); //绘制
+            context.closePath(); //路径结束
+            context.restore();*/
+            context.save();
+            context.lineWidth = 10;
+            context.strokeStyle = "#f90";
+            /*context.clearRect(0, 0, canvas.width, canvas.height);*/
+            //百分比圆环
+            context.beginPath();
+            context.lineCap = "round";
+            context.arc(centerX, centerY, 100 , -Math.PI/2, -Math.PI/2 +n*rad, false); //用于绘制圆弧context.arc(x坐标，y坐标，半径，起始角度，终止角度，顺时针/逆时针)
+            /*angle++;
+            var percentAge = parseInt((angle / 360) * 100)
+            if (angle > (percent / 100 * 360)) {
+                percentAge = percent
+                window.cancelAnimationFrame(timer);
+            };*/
+            context.stroke();
+            context.closePath();
+        }
+        //绘制白色外圈
+        function whiteCircle(){
+            /*context.save();
+            context.fillStyle = "#ccc";
+            context.strokeStyle = "#ccc";
+            context.lineWidth = 10; //设置线宽
+            context.beginPath();
+            context.arc(centerX, centerY, 100 , 0, Math.PI*2, false);
+            context.stroke();
+            context.closePath();
+            context.restore();*/
+            context.save();
+            context.lineWidth = 10;
+            context.strokeStyle = "#ccc";
+            //画底部的灰色圆环
+            context.beginPath();
+            context.arc(centerX, centerY, 100 , 0, Math.PI*2, false);
+            context.closePath();
+            context.stroke();
+
+        }
+        //百分比文字绘制
+        function text(per){
+            /*context.save(); //save和restore可以保证样式属性只运用于该段canvas元素
+            // context.strokeStyle = "#fff"; //设置描边样式
+            context.fillStyle = "#f80"; //设置填充样式
+            context.font = "40px Arial"; //设置字体大小和字体
+            context.lineWidth = 1;
+
+            context.strokeText(n.toFixed(0)+"%", centerX-25, centerY+10);
+            context.stroke(); //执行绘制
+            context.restore();
+            context.closePath();*/
+
+            context.save(); //save和restore可以保证样式属性只运用于该段canvas元素
+            context.beginPath();
+            context.font = '30px Arial';//设置字体大小和字体
+            context.fillStyle = 'red';
+            /*var text = n.toFixed(0)+"%";*/
+            var text = per +"%";
+            //绘制字体，并且指定位置
+            context.fillText(text, centerX-25, centerY+10);
+            context.closePath();
+            context.restore();
+        }
+        //动画循环
+        var timer;
+        (function drawFrame(){
+            timer=window.requestAnimationFrame(drawFrame);
+
+            if(speed > percent) {
+                speed = percent;
+                console.log(speed);
+                window.cancelAnimationFrame(timer);
+            }
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            whiteCircle();
+            text(speed);
+            blueCircle(speed);
+            speed +=.5;
+            console.log('aa')
+        }());
+    }
+    window.onload = inte(30.6);
+</script>
+
+</body>
+</html>

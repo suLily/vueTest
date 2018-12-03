@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>HTML5 Canvas 圆形进度条并显示数字百分比</title>
+
+            <style>
+                *{margin:0;padding:0;}
+                body{text-align:center;background-color:#fff;}
+            </style>
+
+        </head>
+<body>
+
+<canvas id="canvas" width="500" height="500" style="background-color: #000;"></canvas><!---->
+<script>
+    function inte(percent) {
+        var canvas = document.getElementById('canvas'),  //获取canvas元素
+            context = canvas.getContext('2d'),  //获取画图环境，指明为2d
+            centerX = canvas.width/2,   //Canvas中心点x轴坐标
+            centerY = canvas.height/2,  //Canvas中心点y轴坐标
+            rad = Math.PI*2/100, //将360度分成100份，那么每一份就是rad度
+            speed = 0.5; //加载的快慢就靠它了
+
+        //绘制运动外圈
+        function blueCircle(n){
+            context.save();
+            context.lineWidth = 10;
+            context.strokeStyle = "#f90";
+            //百分比圆环
+            context.beginPath();
+            context.lineCap = "round";
+            context.arc(centerX, centerY, 100 , -Math.PI/2, -Math.PI/2 +n*rad, false); //用于绘制圆弧context.arc(x坐标，y坐标，半径，起始角度，终止角度，顺时针/逆时针)
+            context.stroke();
+            context.closePath();
+        }
+        //绘制灰色外圈
+        function whiteCircle(){
+            context.save();
+            context.lineWidth = 10;
+            context.strokeStyle = "#ccc";
+            //画底部的灰色圆环
+            context.beginPath();
+            context.arc(centerX, centerY, 100 , 0, Math.PI*2, false);
+            context.closePath();
+            context.stroke();
+        }
+        //百分比文字绘制
+        function text(per){
+            context.save(); //save和restore可以保证样式属性只运用于该段canvas元素
+            context.beginPath();
+            context.font = '30px Arial';//设置字体大小和字体
+            context.fillStyle = 'red';
+            /*var text = per.toFixed(0)+"%";*/
+            var text = per.toFixed(1) +"%";
+            var textWidth = context.measureText(text).width;
+            //绘制字体，并且指定位置
+            context.fillText(text, centerX-textWidth/2, centerY+10);
+            context.closePath();
+            context.restore();
+        }
+        var t=.01
+        // 画小球
+        function globe (speed) {
+            t+=.01
+            // star(this, 0, 20, 9, 100, '#0661b2', '#1e3b73', 1.5)
+            context.save();
+            /*context.translate(centerX, centerY);*/
+
+            context.rotate(t*(Math.PI/180));
+            context.beginPath();
+            context.arc(250, 150, 10 , 0, Math.PI*2,false);
+            context.fillStyle = 'red';
+            context.fill();
+            context.closePath();
+            // context.stroke();
+            console.log(t)
+        }
+        //动画循环
+        var timer;
+        (function drawFrame(){
+            timer=window.requestAnimationFrame(drawFrame);
+
+            if(speed > percent) {
+                speed = percent;
+                console.log(speed);
+                window.cancelAnimationFrame(timer);
+            }
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            whiteCircle();
+            text(speed);
+            blueCircle(speed);
+            globe(speed);
+            speed +=.5;
+        }());
+    }
+    window.onload = inte(60);
+</script>
+
+</body>
+</html>
